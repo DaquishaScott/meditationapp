@@ -1,0 +1,104 @@
+/* App.css */
+
+/* Define color palette */
+:root {
+  --primary-color: #6a0dad; /* Purple */
+  --secondary-color: #7f00ff; /* Blue-Purple */
+  --background-color: #e6e6fa; /* Lavender */
+  --light-background-color: #f0f8ff; /* Alice Blue */
+  --text-color: #2c2c54; /* Dark Blue */
+  --light-text-color: #5a5a89; /* Light Purple */
+  --button-color: #8a2be2; /* Blue Violet */
+  --button-hover-color: #9370db; /* Medium Purple */
+  --border-color: #b0c4de; /* Light Steel Blue */
+}
+
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+h2 {
+  color: var(--primary-color);
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  background-color: var(--light-background-color);
+  color: var(--text-color);
+}
+
+button {
+  background-color: var(--button-color);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--button-hover-color);
+}
+
+nav {
+  background-color: var(--secondary-color);
+  width: 100%;
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+.container {
+  width: 90%;
+  max-width: 800px;
+  margin: 20px auto;
+  background-color: var(--light-background-color);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.track-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.track-item h3 {
+  margin: 0;
+  color: var(--primary-color);
+}
+
+.track-item button {
+  background-color: var(--secondary-color);
+}
+
+.track-item button:hover {
+  background-color: var(--button-hover-color);
+}
