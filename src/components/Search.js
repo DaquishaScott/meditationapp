@@ -1,37 +1,55 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchMusic } from '../redux/actions';
+import axios from 'axios';
+
 const Search = () => {
-const [query, setQuery] = useState('');
-const dispatch = useDispatch();
-const { items, loading, error } = useSelector((state) => state.music);
-const handleSearch = () => {
-dispatch(fetchMusic(query));
-};
-return (
-<div>
-<input
-type="text"
-placeholder="Search for meditation music..."
-value={query}
-onChange={(e) => setQuery(e.target.value)}
-onKeyPress={(event) => {
-if (event.key === 'Enter') {
-handleSearch();
+  const [query, setQuery] = useState('');
+  const [results, setResults] = useState([]);
+
+  const handleInputChange = (event) => {
+    setQuery(event.target.value);
+  }
+
+  const handleSearch = async (event) => {
+    event.preventDefault();
+    // Simulate an API call or search function
+    try {
+      const response = await axios.get(`YOUR_API_ENDPOINT/search`, {
+        params: { q: query }
+      });
+      setResults(response.data.results); // Adjust based on your API response structure
+    } catch (error) {
+      console.error('Error fetching search results:', error);
+    }
+  }
+
+  return (
+    <div>
+      <h2>Search</h2>
+      <form onSubmit={handleSearch}>
+        <input
+          type="text"
+          value={query}
+          onChange={handleInputChange}
+          placeholder="Search for meditations..."
+          required
+        />
+        <button type="submit">Search</button>
+      </form>
+      <div>
+        {results.length > 0 ? (
+          <ul>
+            {results.map((result, index) => (
+              <li key={index}>{result.name}</li> // Adjust based on your result structure
+            ))}
+          </ul>
+        ) : (
+          <p>No results found</p>
+        )}
+      </div>
+    </div>
+  );
 }
-}}
-/>
-<button onClick={handleSearch}>Search</button>
-{loading && <p>Loading...</p>}
-{error && <p>Error: {error}</p>}
-{items && items.map((item, index) => (
-<div key={index}>
-<h3>{item.trackName}</h3>
-<p>{item.artistName}</p>
-<button>Play</button>
-</div>
-))}
-</div>
-);
-};
+
 export default Search;
+
+

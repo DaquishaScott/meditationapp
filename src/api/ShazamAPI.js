@@ -1,60 +1,47 @@
 import axios from 'axios'
 
-const API_BASE_URL = 'https://shazam.p.rapidapi.com'; // Base URL for Shazam API
-
-const fetchMusicData = async (query) => {
-  const apiKey = 'c0810b64cabbe69da175p17fjsnfad44d9528d6'; // Replace with your actual API key
-  const url = `${API_BASE_URL}/search?term=${encodeURIComponent(query)}`; // Correct API endpoint for search
-
+const RAPIDAPI_KEY = 'c0810b64ffmsh9f1cabbe69da175p17b43fjsnfad44d9528d6';
+const RAPIDAPI_HOST = 'spotify23.p.rapidapi.com';
+// Function to get new releases
+const getNewReleases = async () => {
   try {
-    const response = await fetch(url, {
-      method: 'GET',
+    const response = await axios.get('https://spotify23.p.rapidapi.com/album_new_releases/', {
+      params: { country: 'US' },
       headers: {
-        'Content-Type': 'application/json',
-        'x-rapidapi-key': apiKey,
-        'x-rapidapi-host': 'shazam.p.rapidapi.com' // Correct host header
-      }
+        'X-RapidAPI-Key': RAPIDAPI_KEY,
+        'X-RapidAPI-Host': RAPIDAPI_HOST,
+      },
     });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    return data; // Return the parsed JSON data
+    console.log(response.data);
   } catch (error) {
-    console.error('Fetching music data failed:', error);
-    throw error; // Re-throw the error to handle it higher up if needed
+    console.error(error);
   }
 };
-
-
-console.log(axios)
-
-const options = {
-  method: 'GET',
-  url: 'https://shazam.p.rapidapi.com/shazam-events/list',
-  params: {
-    artistId: '73406786',
-    l: 'en-US',
-    from: '2022-12-31',
-    limit: '50',
-    offset: '0'
-  },
-  headers: {
-    'X-RapidAPI-Key': 'c0810b64ffmsh9f1cabbe69da175p17b43fjsnfad44d9528d6',
-    'X-RapidAPI-Host': 'shazam.p.rapidapi.com'
+// Function to search for an artist
+const searchArtist = async (artistName) => {
+  try {
+    const response = await axios.get('https://spotify23.p.rapidapi.com/search/', {
+      params: {
+        q: artistName,
+        type: 'artists',
+      },
+      headers: {
+        'X-RapidAPI-Key': RAPIDAPI_KEY,
+        'X-RapidAPI-Host': RAPIDAPI_HOST,
+      },
+    });
+    console.log(response.data);
+  } catch (error) {
+    console.error(error);
   }
 };
+// Example usage
+console.log(getNewReleases());
+console.log(searchArtist('Adele'));
+// getNewReleases();
+// searchArtist('Adele');
 
-try {
-	const response = await axios.get('https://shazam.p.rapidapi.com/shazam-events/list', options);
-	console.log(response.data);
-} catch (error) {
-	console.error(error);
+module.exports = {
+  getNewReleases,
+  searchArtist
 }
-
-
-export default 
-  fetchMusicData
-;
